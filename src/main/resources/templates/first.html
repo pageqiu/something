@@ -1,0 +1,35 @@
+<html>
+    <body>
+        <form action="#" th:action="@{/findsummary}" th:object="${summaryForm}" method="post">
+            <table>
+               <!--   <tr>
+                    <td>Name:</td>
+                    <td><input type="text" th:field="*{name}" /></td>
+                    <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
+                </tr>
+                <tr>
+                    <td>Age:</td>
+                    <td><input type="text" th:field="*{age}" /></td>
+                    <td th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Name Error</td>
+                </tr>-->
+                <tr th:each="summary:${summarys}">
+                	<table>
+                	<tr>
+                    <td th:text="${summary.title}">summary.title</td>
+                    </tr>
+                    
+                    <tr>
+                    <td th:text="${summary.context}">context</td>
+                    </tr>
+                    
+                    </table>
+                </tr>
+                
+            </table>
+        </form>
+        <br/>
+        <table>
+      
+        </table>
+    </body>
+</html>

@@ -1,5 +1,7 @@
 package com.page.st.control;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -13,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.page.st.entity.Summary;
 import com.page.st.entity.User;
+import com.page.st.service.SummaryService;
 import com.page.st.service.UserService;
 import com.page.st.vo.PersonForm;
+import com.page.st.vo.SummaryForm;
 
 
 @Controller
@@ -25,6 +30,9 @@ public class WebController extends WebMvcConfigurerAdapter {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private SummaryService summaryService;
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -44,10 +52,23 @@ public class WebController extends WebMvcConfigurerAdapter {
         }
         
         User user = userService.getUserById(personForm.getId());
-        model.addAttribute("name", user.getUserName());
+       // model.addAttribute("name", user.getName());
 		
 		log.error("resuslt=="+user);
 
-        return "form";
+        return "redirect:findesummarys";
+    }
+    @RequestMapping(value="/findesummarys", method=RequestMethod.GET)
+    public String findsummarys(@Valid SummaryForm summaryForm, BindingResult bindingResult,Model model) {
+    	log.error("-----findesummarys=-----");
+        if (bindingResult.hasErrors()) {
+            return "form";
+        }
+        
+        List<Summary> list = summaryService.getAllSummarys();
+        model.addAttribute("summarys", list);
+		log.error("resuslt=="+list);
+
+        return "first";
     }
 }

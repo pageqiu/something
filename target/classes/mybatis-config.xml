@@ -3,6 +3,7 @@
 <configuration>  
     <typeAliases>  
         <typeAlias alias="UserEntity" type="com.page.st.entity.User"/> 
+        <typeAlias alias="SummaryEntity" type="com.page.st.entity.Summary"/> 
     </typeAliases>  
    <!--   <mappers>  
         <mapper resource="com/page/st/mapper/UserMapper.xml" />  

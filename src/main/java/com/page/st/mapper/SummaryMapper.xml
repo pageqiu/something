@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="Summary">  
+  
+    <resultMap type="SummaryEntity" id="summaryResultMap">  
+        <result property="title" column="TITLE"/>  
+        <result property="context" column="CONTEXT"/>  
+    </resultMap>  
+    
+    <!-- include 标签用 -->
+    <sql id="columns">
+    <![CDATA[TITLE,CONTEXT]]>
+    
+    </sql>
+    
+      
+    <!-- 查询学生，根据id -->  
+    <select id="getAllSummarys" resultType="SummaryEntity" resultMap="summaryResultMap">  
+        <![CDATA[ 
+            SELECT * from diary d 
+        ]]>   
+    </select>  
+</mapper>  
