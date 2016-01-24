@@ -3,9 +3,12 @@ package com.page.st.config;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -25,11 +28,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @MapperScan(basePackages = { "com.page.st.**.mapper" })
 public class MyBatisConfiguration implements EnvironmentAware {
 
-	// private static Logger log =
-	// LoggerFactory.getLogger(MybatisConfiguration.class);
+	 private static Logger log =
+	 LoggerFactory.getLogger(MyBatisConfiguration.class);
 	// private static Log logger =
 	// LogFactory.getLog(MybatisConfiguration.class);
 	private RelaxedPropertyResolver propertyResolver;
+	
+	private SqlSessionFactoryBean sessionFactory = null;
 
 	@Resource(name = "dataSource")
 	private DataSource dataSource;
@@ -42,21 +47,27 @@ public class MyBatisConfiguration implements EnvironmentAware {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public SqlSessionFactory sqlSessionFactory() {
+	public SqlSession getSqlSession() {
 		try {
-			SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-			sessionFactory.setDataSource(dataSource);
-			sessionFactory.setTypeAliasesPackage(propertyResolver.getProperty("typeAliasesPackage"));
-			sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver()
-					.getResources(propertyResolver.getProperty("mapperLocations")));
-			sessionFactory.setConfigLocation(
-					new DefaultResourceLoader().getResource(propertyResolver.getProperty("configLocation")));
+			if(sessionFactory == null) {
+				synchronized(this) {
+					if(sessionFactory == null) {
+						sessionFactory = new SqlSessionFactoryBean();
+						sessionFactory.setDataSource(dataSource);
+						sessionFactory.setTypeAliasesPackage(propertyResolver.getProperty("typeAliasesPackage"));
+						sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver()
+								.getResources(propertyResolver.getProperty("mapperLocations")));
+						sessionFactory.setConfigLocation(
+								new DefaultResourceLoader().getResource(propertyResolver.getProperty("configLocation")));
+					}
+				}
+			}
 
-			return sessionFactory.getObject();
+			return ((SqlSessionFactory)sessionFactory.getObject()).openSession();
 		} catch (Exception e) {
 			// logger.warn("Could not confiure mybatis session factory");
 
-			System.out.println(" =====exception===" + e.getMessage()+e);
+			log.error(" =====exception===" + e.getMessage()+e);
 			return null;
 		}
 	}
