@@ -4,6 +4,7 @@
     <typeAliases>  
         <typeAlias alias="UserEntity" type="com.page.st.entity.User"/> 
         <typeAlias alias="SummaryEntity" type="com.page.st.entity.Summary"/> 
+        <typeAlias alias="DiaryEntity" type="com.page.st.entity.Diary"/>
     </typeAliases>  
    <!--   <mappers>  
         <mapper resource="com/page/st/mapper/UserMapper.xml" />  

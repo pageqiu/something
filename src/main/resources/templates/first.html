@@ -1,7 +1,22 @@
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org">
+	<head>
+		
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<!-- viewport的<meta>标签，这个标签可以修改在大部分的移动设备上面的显示，为了确保适当的绘制和触屏缩放。-->
+		<title>first</title>
+		<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
+		<!--  <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"/>-->
+	</head>
     <body>
+   
+    <div class="container">
+    <p class="lead">做了好事，当然可以选择沉默，您仍然是好人；或者选择影响他人，让世界更美好:</p> 
+        
+        
         <form action="#" th:action="@{/findsummary}" th:object="${summaryForm}" method="post">
-            <table>
+            <table class="table table-striped table-bordered">
                <!--   <tr>
                     <td>Name:</td>
                     <td><input type="text" th:field="*{name}" /></td>
@@ -19,7 +34,7 @@
                     </tr>
                     
                     <tr>
-                    <td th:text="${summary.context}">context</td>
+                    <td th:text="${#strings.length(summary.context) lt 150} ?${summary.context}+'......':${#strings.substring(summary.context,0,150)}+'......'">context</td>
                     </tr>
                     
                     </table>
@@ -31,5 +46,13 @@
         <table>
       
         </table>
+        </div>
+        
+        <!--JavaScript插件都是依赖与jQuery库-->
+		<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+		<script src="../js/jquery-2.2.0.min.js"></script>
+		
+		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+		<script src="../bootstrap/js/bootstrap.min.js"></script>
     </body>
 </html>

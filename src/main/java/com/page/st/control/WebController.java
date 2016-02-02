@@ -43,6 +43,11 @@ public class WebController extends WebMvcConfigurerAdapter {
     public String showForm(PersonForm personForm) {
         return "form";
     }
+    
+    @RequestMapping(value="/test2", method=RequestMethod.GET)
+    public String test2() {
+        return "fileUpLoad";
+    }
 
     @RequestMapping(value="/test1", method=RequestMethod.POST)
     public String checkPersonInfo(@Valid PersonForm personForm, BindingResult bindingResult,Model model) {
