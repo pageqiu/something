@@ -7,6 +7,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
@@ -39,6 +40,8 @@ public class FileUploadController {
 	
 	private final String UPLOAD_PATH="D:/upload/";
 	
+	private Random random = new Random();  
+	
 	@Autowired
 	private DiaryService diaryService;
 
@@ -67,19 +70,44 @@ public class FileUploadController {
           
         g.setColor(idCode.getRandomColor(200 , 250)) ;  
         //绘制背景  
-        g.fillRect(0, 0, idCode.getWidth() , idCode.getHeight()) ;  
+        g.fillRect(random.nextInt(5), random.nextInt(5), idCode.getWidth() , idCode.getHeight()) ;  
           
         g.setColor(idCode.getRandomColor(180, 200)) ;  
         idCode.drawRandomLines(g, 160) ;  
-        idCode.drawRandomString(4, g) ;  
+        String code = idCode.drawRandomString(4, g) ; 
+        request.getSession().setAttribute("checkCode", code);
         g.dispose() ;  
         ImageIO.write(image, "JPEG", response.getOutputStream()) ;
+        
+
+    }
+    
+    
+    @RequestMapping(value="/checkCode", method=RequestMethod.POST)
+    public @ResponseBody String checkCode(HttpServletRequest request,@RequestParam("code") String checkCode) throws IOException{
+    	String valiedCode = (String)request.getSession().getAttribute("checkCode");
+    	
+    	log.error("-----"+valiedCode);
+    	log.error("-----"+checkCode);
+    	if (valiedCode.equalsIgnoreCase(checkCode)) {
+    		request.getSession().setAttribute("codeflg", "0");
+    		return "{\"flg\":\"1\"}";
+    	} else {
+    		return "{\"flg\":\"0\"}";
+    	}
 
     }
     
     @RequestMapping(value="/journaling", method=RequestMethod.POST)
-    public @ResponseBody String journaling(
+    public @ResponseBody String journaling(HttpServletRequest request,
             @RequestParam("file") MultipartFile file,@RequestParam("journaling") String text){
+    	
+    	String codeflg = (String)request.getSession().getAttribute("codeflg");
+    	
+    	if(!"0".equals(codeflg)) {
+    		return "请输入正确的验证码";
+    	}
+    	
     	String name = null;
     	String orginName = null;
     	String type = null;
@@ -90,7 +118,7 @@ public class FileUploadController {
     	
     	diary.setContext(text);
     	diary.setUserId(123456);
-    	diary.setTitle("");
+
     	BaseValueUtil.setCreateBaseEntityValue(diary);
     	diaryService.addDiary(diary);
 

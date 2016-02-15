@@ -1,6 +1,7 @@
 package com.page.st.service;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,8 @@ public class UserService {
 	
 	public User getUserById(String id) {
 		
-		SqlSession ss = repository.getSqlSession();
+		SqlSessionFactory factory = repository.getSqlSessionFactory();
+		SqlSession ss = factory.openSession();
 		
 		return userDao.getUserById(ss, id);
 	}

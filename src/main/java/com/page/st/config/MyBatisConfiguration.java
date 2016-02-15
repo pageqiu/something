@@ -47,7 +47,7 @@ public class MyBatisConfiguration implements EnvironmentAware {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public SqlSession getSqlSession() {
+	public SqlSessionFactory getSqlSessionFactory() {
 		try {
 			if(sessionFactory == null) {
 				synchronized(this) {
@@ -63,7 +63,7 @@ public class MyBatisConfiguration implements EnvironmentAware {
 				}
 			}
 
-			return ((SqlSessionFactory)sessionFactory.getObject()).openSession();
+			return ((SqlSessionFactory)sessionFactory.getObject());
 		} catch (Exception e) {
 			// logger.warn("Could not confiure mybatis session factory");
 

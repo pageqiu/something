@@ -1,6 +1,7 @@
 package com.page.st.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 
 public class Diary extends BaseEntity implements Serializable  {
@@ -13,21 +14,87 @@ public class Diary extends BaseEntity implements Serializable  {
 	private static final long serialVersionUID = 3004545855906370395L;
 	private int diaryId;
 	private int userId;
-	private String title;
 	private String context;
-
-
-
-	public String getTitle() {
-		return title;
+	private Timestamp eventTs;
+	private String eventWhere;
+	private String province;
+	private String city;
+	private String district;
+	
+	public Timestamp getEventTs() {
+		return eventTs;
 	}
 
 
 
 
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setEventTs(Timestamp eventTs) {
+		this.eventTs = eventTs;
+	}
+
+
+
+
+
+	public String getEventWhere() {
+		return eventWhere;
+	}
+
+
+
+
+
+	public void setEventWhere(String eventWhere) {
+		this.eventWhere = eventWhere;
+	}
+
+
+
+
+
+	public String getProvince() {
+		return province;
+	}
+
+
+
+
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+
+
+
+
+	public String getCity() {
+		return city;
+	}
+
+
+
+
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+
+
+
+
+	public String getDistrict() {
+		return district;
+	}
+
+
+
+
+
+	public void setDistrict(String district) {
+		this.district = district;
 	}
 
 
