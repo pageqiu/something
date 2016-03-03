@@ -11,11 +11,25 @@ public class Summary implements Serializable  {
 	 * 
 	 */
 	private static final long serialVersionUID = 3004545855906370395L;
+	
+	private int diaryId;
 	private String title;
 	private String context;
 
 	
 	
+	public int getDiaryId() {
+		return diaryId;
+	}
+
+
+
+	public void setDiaryId(int diaryId) {
+		this.diaryId = diaryId;
+	}
+
+
+
 	public String getTitle() {
 		return title;
 	}

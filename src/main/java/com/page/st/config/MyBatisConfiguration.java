@@ -34,7 +34,7 @@ public class MyBatisConfiguration implements EnvironmentAware {
 	// LogFactory.getLog(MybatisConfiguration.class);
 	private RelaxedPropertyResolver propertyResolver;
 	
-	private SqlSessionFactoryBean sessionFactory = null;
+	private SqlSessionFactoryBean sessionFactory;
 
 	@Resource(name = "dataSource")
 	private DataSource dataSource;

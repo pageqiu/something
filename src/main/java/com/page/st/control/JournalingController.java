@@ -13,6 +13,7 @@ import java.util.UUID;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,13 +29,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.page.st.entity.Diary;
+import com.page.st.entity.User;
 import com.page.st.service.DiaryService;
 import com.page.st.util.BaseValueUtil;
 import com.page.st.util.IdentifyingCode;
 
 @Controller
 @SessionAttributes("codeImge")
-public class FileUploadController {
+public class JournalingController {
 	
 	private static Logger log = LoggerFactory.getLogger(WebController.class);  
 	
@@ -70,10 +72,11 @@ public class FileUploadController {
           
         g.setColor(idCode.getRandomColor(200 , 250)) ;  
         //绘制背景  
-        g.fillRect(random.nextInt(5), random.nextInt(5), idCode.getWidth() , idCode.getHeight()) ;  
+        g.fillRect(0, 0, idCode.getWidth() , idCode.getHeight()) ;  
           
         g.setColor(idCode.getRandomColor(180, 200)) ;  
-        idCode.drawRandomLines(g, 160) ;  
+        
+        idCode.drawRandomLines(g, 3) ;  
         String code = idCode.drawRandomString(4, g) ; 
         request.getSession().setAttribute("checkCode", code);
         g.dispose() ;  
@@ -100,7 +103,7 @@ public class FileUploadController {
     
     @RequestMapping(value="/journaling", method=RequestMethod.POST)
     public @ResponseBody String journaling(HttpServletRequest request,
-            @RequestParam("file") MultipartFile file,@RequestParam("journaling") String text){
+            @RequestParam("file") MultipartFile file,@RequestParam("journaling") String text,HttpSession session){
     	
     	String codeflg = (String)request.getSession().getAttribute("codeflg");
     	
@@ -117,7 +120,7 @@ public class FileUploadController {
     	Diary diary = new Diary();
     	
     	diary.setContext(text);
-    	diary.setUserId(123456);
+    	diary.setUserId(((User)session.getAttribute("user")).getId());
 
     	BaseValueUtil.setCreateBaseEntityValue(diary);
     	diaryService.addDiary(diary);
@@ -163,6 +166,11 @@ public class FileUploadController {
         } else {
             return "You failed to upload " + name + " because the file was empty.";
         }
+    }
+    
+    @RequestMapping(value="/gotoJournaling", method=RequestMethod.GET)
+    public String gotoJournaling() {
+        return "journaling";
     }
 
 }

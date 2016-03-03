@@ -62,7 +62,7 @@ public class WebController extends WebMvcConfigurerAdapter {
             return "form";
         }
         
-        User user = userService.getUserById(personForm.getId());
+        User user = userService.getUserById(Integer.valueOf(personForm.getId()));
        // model.addAttribute("name", user.getName());
 		
 		log.error("resuslt=="+user);

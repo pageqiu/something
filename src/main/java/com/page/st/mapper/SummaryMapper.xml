@@ -3,6 +3,7 @@
 <mapper namespace="Summary">  
   
     <resultMap type="SummaryEntity" id="summaryResultMap">  
+    	<result property="diaryId" column="diary_id"/>  
         <result property="title" column="TITLE"/>  
         <result property="context" column="CONTEXT"/>  
     </resultMap>  

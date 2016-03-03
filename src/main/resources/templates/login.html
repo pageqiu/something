@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- viewport的<meta>标签，这个标签可以修改在大部分的移动设备上面的显示，为了确保适当的绘制和触屏缩放。-->
+<title>login</title>
+<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
+<!--  <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"/>-->
+</head>
+<body>
+
+	<div class="container">
+
+
+		<p class="lead">做了好事，当然可以选择沉默，或者选择影响他人，让世界更美好;无论如何您都是好人</p>
+
+		<div>
+			广告位
+		</div>
+
+		<div>
+			<form action="#" th:action="@{/login}"
+				th:object="${loginForm}" method="post">
+	
+				<table class="table table-striped">
+					<tbody>
+					<tr>请登录</tr>
+				    <tr>
+	                    <td><img src="../images/username.png" width="20" height="20" /></td>
+	                    <td><input type="text" th:field="*{loginName}" /></td>
+	                    <td th:if="${#fields.hasErrors('loginName')}" th:errors="*{loginName}">loginName Error</td>
+                	</tr>
+                	
+                	 <tr>
+	                    <td><img src="../images/password.png" width="20" height="20" /></td>
+	                    <td><input type="text" th:field="*{password}" /></td>
+	                    <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password Error</td>
+                	</tr>
+                	<tr>
+                    <td><button type="submit">Submit</button></td>
+                	</tr>
+	
+					</tbody>
+	
+				</table>
+	
+			</form>
+		</div>
+
+
+	</div>
+
+	<!--JavaScript插件都是依赖与jQuery库-->
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="../js/jquery-2.2.0.min.js"></script>
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="../bootstrap/js/bootstrap.min.js"></script>
+	
+</body>
+</html>

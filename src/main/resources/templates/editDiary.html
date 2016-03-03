@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8"/>
-<title>Insert title here</title>
+<title>edit diary</title>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <!-- viewport的<meta>标签，这个标签可以修改在大部分的移动设备上面的显示，为了确保适当的绘制和触屏缩放。-->
 
@@ -78,17 +78,40 @@
     	}
 
 </script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+			if($("#userName").val() != null) {
+				$("#logindiv").hide();
+			}
+			else {
+				$("#userNamediv").hide();
+			}
+
+	});
+	
+	</script>
 </head>
 <body>
 
 <div class="container">
 
-<form method="POST" enctype="multipart/form-data" action="/journaling">
+<p class="lead">
+<div id="userNamediv" th:text="${'welcome: '+session.user.userName}">Hello, userName</div>
+<div id="logindiv"><a href="/login">亲，请登录 </a> <a href="/register">免费注册</a></div>
+</p>
+
+<input type="hidden" id="userName" th:value="${session.user.userName}" ></input>
+
+<form method="POST" enctype="multipart/form-data" action="/editDiary">
+
+<input type="hidden" id="daryId" th:value="${diary.diaryId}" ></input>
 
 <table>
 <tr>
 <td>
-<textarea rows="30" cols="50" name="journaling">请输入.</textarea>
+<textarea rows="30" cols="50" name="journaling" th:text="${diary.context}">请输入.</textarea>
 <script type="text/javascript">CKEDITOR.replace('journaling');</script>
 </td>
 </tr>

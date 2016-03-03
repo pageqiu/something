@@ -55,6 +55,7 @@ public class IdentifyingCode {
         for(int i=0 ; i<nums ; i++){  
             int x1 = random.nextInt(width) ;  
             int y1 = random.nextInt(height);  
+ 
             int x2 = random.nextInt(12) ;  
             int y2 = random.nextInt(12) ;  
             g.drawLine(x1, y1, x2, y2) ;  
@@ -122,7 +123,7 @@ public class IdentifyingCode {
 //            	temp = String.valueOf((char)(0x4e00 + random.nextInt(delta))); 
 //                break;  
             default:  
-                itmp = random.nextInt(8) + 50 ;  
+                itmp = random.nextInt(10) + 48 ;  
                 temp = String.valueOf((char)itmp) ;  
                 break;  
             }  

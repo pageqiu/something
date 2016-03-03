@@ -5,6 +5,11 @@
     <resultMap type="DiaryEntity" id="diaryResultMap">  
         <result property="title" column="TITLE"/>  
         <result property="context" column="CONTEXT"/>  
+        <result property="userId" column="USER_ID"/>
+        <result property="diaryId" column="DIARY_ID"/>   
+        <result property="eventTs" column="EVENT_TS"/> 
+        <result property="updateTime" column="UPDATE_TIME"/>  
+        <result property="seqNo" column="SEQ_NO"/> 
     </resultMap>  
     
     <!-- include 标签用 -->
@@ -29,5 +34,39 @@
         insert into DIARY(USER_ID,CONTEXT,EVENT_TS,EVENT_WHERE,PROVINCE,CITY,DISTRICT,UPDATE_TIME,CREATE_TIME,CREATE_PERSON,UPDATE_PERSON,SEQ_NO)  
              values(#{userId},#{context},#{eventTs},#{eventWhere},#{province},#{city},#{district},#{updateTime},#{createTime},#{createPerson},#{updatePerson},#{seqNo})  
     </insert>
+    
+    <select id="getDiaryDetailById" parameterType="int" resultType="DiaryEntity" resultMap="diaryResultMap">
+    
+    	select * from diary where diary_id=#{diaryId}
+    
+    </select>
+    
+    <update id="editDiary" parameterType="DiaryEntity">
+    
+    	update 
+    		DIARY 
+    	<set>
+    		<if test="context!=null">
+    			context=#{context},
+    		</if>
+	    	<if test="seqNo!=null">
+	    		seq_no=#{seqNo},
+	    	</if>
+	    	
+	    	<if test="eventTs!=null">
+	    		event_ts=#{eventTs},
+	    	</if>
+	    	
+	    	<if test="eventWhere!=null">
+	    		event_where=#{eventWhere},
+	    	</if>
+	    	<if test="province!=null">
+	    		province=#{province},
+	    	</if>
+	    	
+    	</set> 
+    	
+    	
+    </update>
     
 </mapper>  

@@ -32,6 +32,31 @@ public class DiaryService {
 		ss.close();
 		return num;
 	}
+	
+	public Diary gotoDiaryDetail(int diaryId) {
+		
+		SqlSessionFactory factory = repository.getSqlSessionFactory();
+		SqlSession ss = factory.openSession();
+
+		Diary diary = diaryDao.getDiaryDetailById(ss, diaryId);
+
+		ss.clearCache();
+		ss.close();
+		return diary;
+	}
+	
+	
+	public Diary editDiary(int diaryId,String context) {
+		
+		SqlSessionFactory factory = repository.getSqlSessionFactory();
+		SqlSession ss = factory.openSession();
+
+		Diary diary = diaryDao.getDiaryDetailById(ss, diaryId);
+
+		ss.clearCache();
+		ss.close();
+		return diary;
+	}
 
 
 }

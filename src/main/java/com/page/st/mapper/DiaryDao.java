@@ -17,5 +17,21 @@ public class DiaryDao {
 
 		
 	}
+	
+	public Diary getDiaryDetailById(SqlSession ss,int diaryId){
+
+		
+		return ss.selectOne("Diary.getDiaryDetailById", diaryId);
+
+		
+	}
+	
+	public int editDiary(SqlSession ss,Diary diary){
+
+		
+		return ss.update("Diary.editDiary", diary);
+
+		
+	}
 
 }

@@ -1,0 +1,97 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- viewport的<meta>标签，这个标签可以修改在大部分的移动设备上面的显示，为了确保适当的绘制和触屏缩放。-->
+<title>first</title>
+<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
+<!--  <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"/>-->
+</head>
+<body>
+
+	<div class="container">
+
+		<p class="lead">做了好事，当然可以选择沉默，或者选择影响他人，让世界更美好;无论如何您都是好人</p>
+
+		<form action="#" th:action="@{/register}"
+			th:object="${registerForm}" method="post">
+
+			<table class="table table-striped">
+				<tbody>
+
+					<tr>
+						<td>用户名</td><td><input name="userName" th:field="*{userName}"></input></td>
+						<td th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">userName Error</td>
+					</tr><tr>
+						<td>邮箱</td><td><input name="email" th:field="*{email}"></input></td>
+						<td th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email Error</td>
+					</tr><tr>
+						<td>手机</td><td><input name="mobile" th:field="*{mobile}"></input></td>
+						<td th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}">mobile Error</td>
+					</tr><tr>
+						<td>密码</td><td><input name="password" th:field="*{password}"></input></td>
+						<td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password Error</td>
+					</tr><tr>	
+						<td>确认密码</td><td><input name="password2" th:field="*{password2}"></input></td>
+						<td th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}">password2 Error</td>
+					</tr>
+					 <tr>
+                    <td><button type="submit">Submit</button></td>
+                </tr>
+
+				</tbody>
+
+			</table>
+
+		</form>
+
+
+	</div>
+
+	<!--JavaScript插件都是依赖与jQuery库-->
+	<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+	<script src="../js/jquery-2.2.0.min.js"></script>
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="../bootstrap/js/bootstrap.min.js"></script>
+
+	<script src="../js/Chart.js"></script>
+
+	<script>
+	
+	var arryNames = []; 
+	var arryValues = [];
+	var provincestr = document.getElementById("provinceList").value;
+	provincestr = provincestr.substring(1,provincestr.length-1);
+	var provincestrlist = provincestr.split(",");
+	
+	var valuestr = document.getElementById("valueList").value;
+	valuestr = valuestr.substring(1,valuestr.length-1);
+	var valuestrlist = valuestr.split(",");
+
+	var barChartData = {
+			
+		labels : provincestrlist,
+		datasets : [
+			{
+				fillColor : "rgba(151,187,205,0.5)",
+				strokeColor : "rgba(151,187,205,0.8)",
+				highlightFill : "rgba(151,187,205,0.75)",
+				highlightStroke : "rgba(151,187,205,1)",
+				data : valuestrlist
+			}
+		]
+
+	}
+	window.onload = function(){
+		var ctx = document.getElementById("canvas").getContext("2d");
+		window.myBar = new Chart(ctx).Bar(barChartData, {
+			responsive : true
+		});
+	}
+
+	</script>
+</body>
+</html>
