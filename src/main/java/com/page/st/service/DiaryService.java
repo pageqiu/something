@@ -46,16 +46,16 @@ public class DiaryService {
 	}
 	
 	
-	public Diary editDiary(int diaryId,String context) {
+	public int editDiary(Diary diary) {
 		
 		SqlSessionFactory factory = repository.getSqlSessionFactory();
 		SqlSession ss = factory.openSession();
 
-		Diary diary = diaryDao.getDiaryDetailById(ss, diaryId);
+		int num = diaryDao.editDiary(ss, diary);
 
 		ss.clearCache();
 		ss.close();
-		return diary;
+		return num;
 	}
 
 

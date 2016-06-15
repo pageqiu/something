@@ -88,6 +88,8 @@
 			else {
 				$("#userNamediv").hide();
 			}
+			
+			alert("-diaryId-"+$("#diaryId").val());
 
 	});
 	
@@ -98,15 +100,16 @@
 <div class="container">
 
 <p class="lead">
+<div><a th:href="@{/findesummarys}">首页</a></div>
 <div id="userNamediv" th:text="${'welcome: '+session.user.userName}">Hello, userName</div>
 <div id="logindiv"><a href="/login">亲，请登录 </a> <a href="/register">免费注册</a></div>
 </p>
 
 <input type="hidden" id="userName" th:value="${session.user.userName}" ></input>
 
-<form method="POST" enctype="multipart/form-data" action="/editDiary">
+<form action="#" method="post" enctype="multipart/form-data" th:action="@{/editDiary}" th:object="${diaryForm}">
 
-<input type="hidden" id="daryId" th:value="${diary.diaryId}" ></input>
+<input type="hidden" id="diaryId" name="diaryId" th:value="${diary.diaryId}" ></input>
 
 <table>
 <tr>

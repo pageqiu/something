@@ -35,4 +35,10 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
+	
+	// config.startupMode = 'source';
+	
+	config.shiftEnterMode = CKEDITOR.ENTER_P;
+
+	config.enterMode =CKEDITOR.ENTER_BR;
 };

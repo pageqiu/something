@@ -25,7 +25,9 @@ import com.page.st.service.DiaryService;
 import com.page.st.service.StatisticsService;
 import com.page.st.service.SummaryService;
 import com.page.st.service.UserService;
+import com.page.st.vo.DiaryForm;
 import com.page.st.vo.PersonForm;
+import com.page.st.vo.RegisterForm;
 import com.page.st.vo.SummaryForm;
 
 
@@ -70,10 +72,14 @@ public class DiaryController extends WebMvcConfigurerAdapter {
     
     
     @RequestMapping(value="/editDiary", method=RequestMethod.POST)
-    public String editDiary(@RequestParam(required=true) int diaryId,@RequestParam("journaling") String text,Model model) {
+    public String editDiary(@Valid DiaryForm diaryForm, BindingResult bindingResult, Model model) {
     	
-    	log.error("--diartyId--"+diaryId);
-     	Diary diary = diaryService.gotoDiaryDetail(diaryId);
+    	log.error("--diaryForm-"+diaryForm);
+    	Diary diary = new Diary();
+    	diary.setDiaryId(Integer.valueOf(diaryForm.getDiaryId()));
+    	diary.setContext(diaryForm.getJournaling());
+    			
+     	int num  = diaryService.editDiary(diary);
 //    	
     	model.addAttribute("diary", diary);
     	

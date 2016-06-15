@@ -3,7 +3,6 @@
 <mapper namespace="Diary">  
   
     <resultMap type="DiaryEntity" id="diaryResultMap">  
-        <result property="title" column="TITLE"/>  
         <result property="context" column="CONTEXT"/>  
         <result property="userId" column="USER_ID"/>
         <result property="diaryId" column="DIARY_ID"/>   
@@ -46,26 +45,60 @@
     	update 
     		DIARY 
     	<set>
-    		<if test="context!=null">
-    			context=#{context},
-    		</if>
-	    	<if test="seqNo!=null">
-	    		seq_no=#{seqNo},
-	    	</if>
-	    	
-	    	<if test="eventTs!=null">
-	    		event_ts=#{eventTs},
-	    	</if>
-	    	
-	    	<if test="eventWhere!=null">
-	    		event_where=#{eventWhere},
-	    	</if>
-	    	<if test="province!=null">
-	    		province=#{province},
-	    	</if>
+    		<if test="createTime!=null">
+				CREATE_TIME=#{createTime},
+			</if>
+			
+			<if test="updateTime!=null">
+				UPDATE_TIME=#{updateTime},
+			</if>
+			
+			<if test="createPerson!=null">
+				CREATE_PERSON=#{createPerson},
+			</if>
+			
+			<if test="updatePerson!=null">
+				UPDATE_PERSON=#{updatePerson},
+			</if>
+			
+			<if test="seqNo!=null">
+				SEQ_NO=#{seqNo},
+			</if>
+			
+			<if test="context!=null">
+				CONTEXT=#{context},
+			</if>
+			
+			<if test="eventTs!=null">
+				EVENT_TS=#{eventTs},
+			</if>
+			
+			<if test="eventWhere!=null">
+				EVENT_WHERE=#{eventWhere},
+			</if>
+			
+			<if test="province!=null">
+				PROVINCE=#{province},
+			</if>
+			
+			<if test="city!=null">
+				CITY=#{city},
+			</if>
+			
+			<if test="district!=null">
+				DISTRICT=#{district},
+			</if>
+			
+			<if test="street!=null">
+				STREET=#{street},
+			</if>
+			
+			<if test="village!=null">
+				VILLAGE=#{village},
+			</if>
 	    	
     	</set> 
-    	
+    	where DIARY_ID=#{diaryId}
     	
     </update>
     

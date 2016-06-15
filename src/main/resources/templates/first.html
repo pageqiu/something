@@ -61,7 +61,7 @@
 				<tbody>
 
 					<tr th:each="summary:${summarys}">
-						<td><a th:href="@{/gotoDiaryDetail(diaryId=${summary.diaryId})}" th:text="${#strings.length(summary.context) lt 120} ?${summary.context}+'......':${#strings.substring(summary.context,0,120)}+'......'">test</a></td>
+						<td><a th:href="@{/gotoDiaryDetail(diaryId=${summary.diaryId})}" th:utext="${#strings.length(summary.context) lt 120} ?${summary.context}+'......':${#strings.substring(summary.context,0,120)}+'......'">test</a></td>
 
 
 					</tr>

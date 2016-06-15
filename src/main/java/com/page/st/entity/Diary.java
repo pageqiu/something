@@ -20,6 +20,8 @@ public class Diary extends BaseEntity implements Serializable  {
 	private String province;
 	private String city;
 	private String district;
+	private String street;
+	private String village;
 	
 	public Timestamp getEventTs() {
 		return eventTs;
@@ -143,6 +145,36 @@ public class Diary extends BaseEntity implements Serializable  {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+
+
+
+
+	public String getStreet() {
+		return street;
+	}
+
+
+
+
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+
+
+	public String getVillage() {
+		return village;
+	}
+
+
+
+
+
+	public void setVillage(String village) {
+		this.village = village;
 	}
 
 
