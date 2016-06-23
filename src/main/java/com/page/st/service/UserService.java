@@ -11,6 +11,7 @@ import com.page.st.common.Constants;
 import com.page.st.config.MyBatisConfiguration;
 import com.page.st.entity.Login;
 import com.page.st.entity.User;
+import com.page.st.mapper.LoginMapper;
 import com.page.st.mapper.UserDao;
 import com.page.st.util.BaseValueUtil;
 import com.page.st.util.CheckUtil;
@@ -24,6 +25,9 @@ public class UserService {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private LoginMapper loginMapper;
 	
 	public User getUserById(int id) {
 		
@@ -60,8 +64,8 @@ public class UserService {
 	
 	public Login login(String loginName,String password) {
 		
-		SqlSessionFactory factory = repository.getSqlSessionFactory();
-		SqlSession ss = factory.openSession();
+//		SqlSessionFactory factory = repository.getSqlSessionFactory();
+//		SqlSession ss = factory.openSession();
 		
 		String type = null;
 		if(CheckUtil.checkEmail(loginName)) {
@@ -77,12 +81,14 @@ public class UserService {
 		login.setValue(loginName);
 		login.setPassword(password);
 		
-		Login l = userDao.getLogin(ss, login);
-
-		ss.clearCache();
-		ss.close();
+		Login l =loginMapper.getLoginInfo(login);
 		
-		return l;
+		//Login l = userDao.getLogin(ss, login);
+//
+//		ss.clearCache();
+//		ss.close();
+		
+ 		return l;
 	}
 
 

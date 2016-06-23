@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,9 +41,15 @@ public class JournalingController {
 	
 	private static Logger log = LoggerFactory.getLogger(WebController.class);  
 	
-	private final String UPLOAD_PATH="D:/upload/";
+	@Value("${upload_path}")
+	private  String UPLOAD_PATH;
 	
 	private Random random = new Random();  
+	
+//	static {
+//		UPLOAD_PATH = JournalingController.class.getClassLoader().getResource("").getPath();
+//		log.error("==========path=========="+UPLOAD_PATH);
+//	}
 	
 	@Autowired
 	private DiaryService diaryService;
@@ -101,6 +108,18 @@ public class JournalingController {
 
     }
     
+    private int checkImageType(String name) {
+    	
+    	if(name ==null) {
+    		return -1;
+    	}
+    	
+    	if (name.endsWith(".jpg")||name.endsWith(".jpeg")||name.endsWith(".png")){
+    		return name.lastIndexOf(".");
+    	}
+    	return -1;
+    }
+    
     @RequestMapping(value="/journaling", method=RequestMethod.POST)
     public @ResponseBody String journaling(HttpServletRequest request,
             @RequestParam("file") MultipartFile file,@RequestParam("journaling") String text,HttpSession session){
@@ -115,23 +134,33 @@ public class JournalingController {
     	String orginName = null;
     	String type = null;
     	
-    	log.error("--journaling---"+text);
-    	
     	Diary diary = new Diary();
     	
     	diary.setContext(text);
     	diary.setUserId(((User)session.getAttribute("user")).getId());
 
     	BaseValueUtil.setCreateBaseEntityValue(diary);
-    	diaryService.addDiary(diary);
+    	int num = diaryService.addDiary(diary);
+    	
+    	int diaryId= diary.getDiaryId();
+    	
+    	log.error("----diaryId----"+diaryId);
 
         if (!file.isEmpty()) {
             try {
             	orginName = file.getOriginalFilename();
+            	
+            	int index = checkImageType(orginName);
+            	
+            	if(index<0){
+            		return "图片类型不正确（jpg，jpeg,png）";
+            	}
+            	
             	type = file.getContentType();
                 byte[] bytes = file.getBytes();
+                //String name= ((User)session.getAttribute("user")).getId()
                 BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(new File(UPLOAD_PATH+orginName)));
+                        new BufferedOutputStream(new FileOutputStream(new File(UPLOAD_PATH+diaryId+orginName.substring(index))));
                 stream.write(bytes);
                 stream.close();
                 return "You successfully uploaded  "+orginName+"--type-"+type;
@@ -155,6 +184,7 @@ public class JournalingController {
             	orginName = file.getOriginalFilename();
             	type = file.getContentType();
                 byte[] bytes = file.getBytes();
+                log.error("-----------path-----------"+UPLOAD_PATH+orginName);
                 BufferedOutputStream stream =
                         new BufferedOutputStream(new FileOutputStream(new File(UPLOAD_PATH+orginName)));
                 stream.write(bytes);

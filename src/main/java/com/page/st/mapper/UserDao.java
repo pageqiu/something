@@ -36,9 +36,9 @@ public class UserDao {
 		
 	}
 	
-	public Login getLogin(SqlSession ss,Login login){
-		
-		return ss.selectOne("Login.getLoginInfo", login);
-	}
+//	public Login getLogin(SqlSession ss,Login login){
+//		
+//		return ss.selectOne("Login.getLoginInfo", login);
+//	}
 
 }

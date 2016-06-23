@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
-<mapper namespace="Diary">  
+<mapper namespace="com.page.st.mapper.DiaryMapper">  
   
     <resultMap type="DiaryEntity" id="diaryResultMap">  
         <result property="context" column="CONTEXT"/>  
@@ -29,7 +29,7 @@
      <!--执行增加操作的SQL语句。id和parameterType分别与IUserOperation接口中的addUser方法的名字和参数类型一致。
     useGeneratedKeys设置为"true"表明要MyBatis获取由数据库自动生成的主键；keyProperty="id"指定把获取到的主键值注入到User的id属性--> 
     <insert id="addDiary" parameterType="DiaryEntity" 
-        useGeneratedKeys="true" keyProperty="DIARY_ID"> 
+        useGeneratedKeys="true" keyProperty="diaryId"> 
         insert into DIARY(USER_ID,CONTEXT,EVENT_TS,EVENT_WHERE,PROVINCE,CITY,DISTRICT,UPDATE_TIME,CREATE_TIME,CREATE_PERSON,UPDATE_PERSON,SEQ_NO)  
              values(#{userId},#{context},#{eventTs},#{eventWhere},#{province},#{city},#{district},#{updateTime},#{createTime},#{createPerson},#{updatePerson},#{seqNo})  
     </insert>
