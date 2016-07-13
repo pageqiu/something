@@ -28,7 +28,11 @@ import com.page.st.vo.LoginForm;
 import com.page.st.vo.PersonForm;
 import com.page.st.vo.SummaryForm;
 
-
+/**
+ * 暂时封板 2016-07-13
+ * @author pageqiu
+ *
+ */
 @Controller
 public class LoginController extends WebMvcConfigurerAdapter {
 	
